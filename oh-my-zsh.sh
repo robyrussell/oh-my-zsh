@@ -40,6 +40,7 @@ omz_f() {
 
 # Check if in emulation mode, if so early return
 # https://github.com/ohmyzsh/ohmyzsh/issues/11686
+# Chore: fix # https://github.com/ohmyzsh/ohmyzsh/issues/11689
 [[ "$(emulate)" = zsh ]] || {
   printf "$(omz_f 1 31)Error:$(omz_f 22) Oh My Zsh can't be loaded in \`$(emulate)\` emulation mode.$(omz_f 0)\n" >&2
   return 1
@@ -51,6 +52,7 @@ unset -f omz_f
 [[ -n "$ZSH" ]] || export ZSH="${${(%):-%x}:a:h}"
 
 # Set ZSH_CUSTOM to the path where your custom config files
+# Set ZSH - needs to be defined - to the path where your custom config files
 # and plugins exists, or else we will use the default custom/
 [[ -n "$ZSH_CUSTOM" ]] || ZSH_CUSTOM="$ZSH/custom"
 
@@ -98,6 +100,8 @@ for plugin ($plugins); do
 done
 
 # Figure out the SHORT hostname
+# See issue on macOS - need to run compinit first. Issue now fixed.
+# Append zcompdump metadata if missing
 if [[ "$OSTYPE" = darwin* ]]; then
   # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
   SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST="${HOST/.*/}"
@@ -193,7 +197,6 @@ _omz_source() {
 }
 
 # Load all of the lib files in ~/.oh-my-zsh/lib that end in .zsh
-# TIP: Add files you don't want in git to .gitignore
 for lib_file ("$ZSH"/lib/*.zsh); do
   _omz_source "lib/${lib_file:t}"
 done
