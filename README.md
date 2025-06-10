@@ -153,20 +153,16 @@ plugins=(
 )
 ```
 
-_Note that the plugins are separated by whitespace (spaces, tabs, new lines...). **Do not** use commas between
-them or it will break._
-
 #### Using Plugins
 
-Each built-in plugin includes a **README**, documenting it. This README should show the aliases (if the plugin
-adds any) and extra goodies that are included in that particular plugin.
+Each built-in plugin includes a **README** documenting it. This README should show the aliases (if the plugin
+adds any) and extra features that are included in that particular plugin.
 
 ### Themes
 
 We'll admit it. Early in the Oh My Zsh world, we may have gotten a bit too theme-happy. We have over one
 hundred and fifty themes now bundled. Most of them have
 [screenshots](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) on the wiki (We are working on updating this!).
-Check them out!
 
 #### Selecting A Theme
 
@@ -189,7 +185,7 @@ ZSH_THEME="agnoster" # (this is one of the fancy ones)
 
 <!-- prettier-ignore-start -->
 > [!NOTE]
-> You will many times see screenshots for a zsh theme, and try it out, and find that it doesn't look the same for you.
+> You will many times see screenshots for a zsh theme, try it out, and find that it doesn't look the same for you.
 >
 > This is because many themes require installing a [Powerline Font](https://github.com/powerline/fonts) or a
 > [Nerd Font](https://github.com/ryanoasis/nerd-fonts) in order to render properly. Without them, these themes
@@ -331,7 +327,7 @@ Once you open up a new terminal window, it should load zsh with Oh My Zsh's conf
 
 ### Installation Problems
 
-If you have any hiccups installing, here are a few common fixes.
+If you have any hiccups installing, here are a few common fixes:
 
 - You _might_ need to modify your `PATH` in `~/.zshrc` if you're not able to find some commands after
   switching to `oh-my-zsh`.
